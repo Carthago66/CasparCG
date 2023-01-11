@@ -244,10 +244,11 @@ public:
                 if (!thumbnail_mode) {
                     worker_.begin_invoke([=]() {
                         while (!abort_) {
-                            bool got_frame = try_decode_frame();
+							bool got_frame;
+							for (int n = 0; n < 16 && frame_buffer_.size() < 2; ++n) got_frame = try_decode_frame();
 
-                            // If end of file, then abort the loop
-                            if (input_.eof() && input_.buffer_empty() && !got_frame) {
+                            // If end of file and buffer empty, then abort the loop
+							if (input_.eof() && input_.buffer_empty() && frame_buffer_.empty()) {
                                 return;
                             }
                         }

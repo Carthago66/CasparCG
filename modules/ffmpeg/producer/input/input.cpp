@@ -365,7 +365,7 @@ struct input::impl : boost::noncopyable
 		if(ret == AVERROR_EOF)
 			CASPAR_LOG(trace) << print() << " Received EOF. ";
 
-		return ret == AVERROR_EOF || ret == AVERROR(EIO) || file_frame_number_ >= out_; // av_read_frame doesn't always correctly return AVERROR_EOF;
+		return ret == AVERROR_EOF || ret == AVERROR(EIO);
 	}
 
 	int num_audio_streams() const
